@@ -50,76 +50,75 @@ module.exports = {
     async show(req, res) {
 
         try {
-            
+            let results = await Chef.find(req.parms.id)
+
+            const chef = results.rows[0]
+
+            if (!chef) return res.send('Chef not found!')
+
+            await Chef.findRecipesOfChef(req.params.id)
+
+            return res.render("admin/chefs/show", { chef, recipes })
+
         } catch (error) {
             console.log(error)
         }
-
-        Chef.find(req.params.id, function(chef) {
-            if (!chef) return res.send('Chef not found!')
-
-            Chef.findRecipesOfChef(req.params.id, function(recipes) {
-
-                return res.render("admin/chefs/show", { chef, recipes })
-            })
-        })
     },
     async edit(req, res) {
 
         try {
-            
+            let results = await Chef.find(req.parms.id)
+
+            const chef = results.rows[0]
+
+            if (!chef) return res.send('Chef not found!')
+
+            return res.render("admin/chefs/edit", { chef })
+
         } catch (error) {
             console.log(error)
             
         }
-
-        Chef.find(req.params.id, function(chef) {
-            if (!chef) return res.send('Chef not found!')
-            
-            return res.render("admin/chefs/edit", { chef })
-        })
     },
     async put(req, res) {
 
         try {
-            
-        } catch (error) {
-            console.log(error)
-            
-        }
+            const keys = Object.keys(req.body)
 
-        const keys = Object.keys(req.body)
-
-        for (key of keys) {
-            if (req.body[key] == "") {
-                return res.send('Please fill all fields!')
+            for (key of keys) {
+                if (req.body[key] == "") {
+                    return res.send('Please fill all fields!')
+                }
             }
-        }
 
-        Chef.update(req.body, function() {
+            await Chef.update(req.body)
+
             return res.redirect(`/admin/chefs/${req.body.id}`)
-        })
+
+        } catch (error) {
+            console.log(error)          
+        }
     },
     async delete(req, res) {
 
         try {
+            let results = await Chef.find(req.body.id)
+
+            const chef = results.rows[0]
+
+            if (chef.total_recipes >= 1) {
+                
+                return res.send('Chefs que possuem receitas não podem ser deletados')
+            } else {
+                
+                await Chef.delete(req.body.id)
+
+                return res.redirect(`/admin/chefs`)
+            }
             
         } catch (error) {
             console.log(error)
             
         }
-
-        Chef.find(req.body.id, function(chef) {
-            if (chef.total_recipes >= 1) {
-
-                return res.send('Chefs que possuem receitas não podem ser deletados')
-            } else {
-
-                Chef.delete(req.body.id, function() {
-                    
-                    return res.redirect(`/admin/chefs`)
-                })
-            }
-        })
     },
 }
