@@ -1,0 +1,385 @@
+@import "main.css";
+
+
+/* HEADER */
+header {
+    font-weight: normal;
+    
+    padding: 30px 0;
+    margin-bottom: 20px;
+    display: flex;  
+}
+
+.links {
+    display: flex;
+    align-items: center;
+    margin-left: 120px;
+    width: 100%;
+}
+
+.links a {
+    text-decoration: none;
+    color: #111;
+}
+
+.links a + a {
+    margin-left: 30px;
+}
+
+.links a.active {
+    font-weight: bold;
+}
+
+.form-filter form {
+    display: flex;
+}
+
+.form-filter form input {
+    height: 37px;
+    width: 246px;
+    margin-right: 8px;
+}
+
+.form-filter form input::placeholder {
+    font-size: 14px;
+    line-height: 16px;
+    color:#999;
+}
+
+.form-filter form button {
+    background: #6558c3;
+    color: #fff;
+    padding: 9px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/*=== BANNER ===*/ 
+.banner {
+    background-color: #FBDFDB;
+    padding: 0 60px;
+    height: 366px;
+    width: 100%;
+    border-radius: 30px;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.text_banner {
+    width: 320px;
+}
+
+.banner h2 {
+    margin-top: 117px;
+    font-size: 32px;
+    line-height: 38px;
+    font-weight: bold;
+}
+
+.banner p {
+    margin-top: 10px;
+    font-size: 18px;
+    line-height: 28px;
+    opacity: 70%;
+}
+
+.banner img {
+    margin-right: 100px;
+    margin-top: 66px;
+    width: 216px;
+    height: 300px;
+}
+
+.bottom {
+    margin-top: 50px;
+    font-weight: bold;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+
+    margin: 20px auto;
+}
+
+.card_image img{
+    width: 300px;
+    height: 140px;
+    border-radius: 15px;
+}
+
+.card {
+    cursor: pointer;
+}
+
+.card_recipe a {
+    color: #6558c3;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.card_title {
+    font-size: 18px;
+    line-height: 21px;
+    margin-top: 20px;
+    font-weight: normal;
+}
+
+.card_chef {
+    margin-top: 5px;
+    color: #777;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: normal;
+}
+
+footer {
+    width: 100%;
+    background-color: #EEE;
+    margin-top: 50px;
+}
+
+footer p{
+    color: #999;
+    font-size: 14px;
+    line-height: 16px;
+    padding: 23px 0;
+    text-align: center;
+}
+
+
+/*=== SOBRE ===*/
+.about h1 {
+    font-size: 24px;
+    line-height: 28px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+.about h2{
+    font-size: 20px;
+    line-height: 24px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.about p{
+    font-size: 18px;
+    line-height: 28px;
+    text-align: justify;
+}
+
+/*=== MODAL ===*/
+.modal-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    
+    background-color: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+}
+
+.modal {
+    display: flex;
+    justify-content: center;
+    
+    background-color: #FFF;
+    width: 660px;
+    height: 413px;
+    position: relative;
+    padding: 30px;
+    border-radius: 16px;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-content .card_image img {
+    border-radius: 15px;
+    width: 100%;
+    height: 200px;   
+    object-fit: cover; /* <- sem um tamanho isso nao é necessario */
+}
+
+.modal-content .card_title {
+    position: relative;
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: normal;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+.modal-content .card_chef {
+    color: #777;
+    position: relative;
+    font-size: 21px;
+    margin-bottom: 60px;
+}
+
+.modal .close-modal {
+    color: #999;
+    position: absolute;
+    bottom: 30px;
+    left: 281px;
+    cursor: pointer;
+}
+
+/*=== RECIPE PAGE === */
+.recipes {
+    width: 100%;
+    margin: 20px auto;
+}
+
+.recipe-image img {
+    width: 100%;
+    height: 280px;
+    border-radius: 15px;
+}
+
+.recipe-header {
+    text-align: center;
+}
+
+.recipe-title {
+    margin-bottom: 24px;
+}
+
+.recipe-title h1 {
+    font-size: 36px;
+    line-height: 42px;
+    margin-top: 50px;
+    font-weight: bold;
+}
+
+.recipe-chef p {
+    margin-top: 5px;
+    color: #777;
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: normal;
+}
+
+.topic {
+    display: flex;
+    font-weight: bold;
+}
+
+.topic h2 {  
+    font-size: 24px;
+    line-height: 28px;
+    margin-top: 50px;
+    margin-right: 8px;
+}
+
+.topic h4 {
+    font-size: 12px;
+    line-height: 14px;
+    color: #999;
+    margin-top: 60px;
+    cursor: pointer;
+}
+
+.recipes ul {
+    font-size: 18px;
+    line-height: 28px;
+    margin-top: 20px;
+    color: #444444;
+}
+
+.information p {
+    font-size: 18px;
+    line-height: 28px;
+    margin-top: 20px;
+    color: #444444;
+}
+
+.instructions.hidden{
+    /* display: none; */
+    opacity: 0;
+    visibility: hidden; 
+    height:0;
+}
+
+/*=== DETAILS ===*/
+
+.details {
+    padding: 32px;
+}
+
+.details .item {
+    padding: 16px 0px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.details form {
+    flex-direction: column;
+}
+
+input {
+    width: 100%;
+    outline: none;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px 20px;
+    font-size: 16px;
+}
+
+/* === CHEFS === */
+.chefs {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.chefs .chef {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.chef .chef_avatar img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 0;
+}
+
+.chef_content .chef_name p {
+    margin-bottom: 10px;
+
+    font-style: 18px;
+    line-height: 21px;
+    color: #111;
+}
+
+.chef_content .chef-total_recipes p {
+    margin-bottom: 0;
+
+    font-size: 14px;
+    line-height: 16px;
+    color: #666;
+}

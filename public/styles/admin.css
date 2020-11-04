@@ -1,0 +1,438 @@
+@import "main.css";
+
+/* ADMIN */
+.admin header {
+    background: var(--color-main);
+    padding: 26px;
+    margin-bottom: 50px;
+    max-width: 100%;
+}
+
+.admin header .web-container {
+    display: flex;
+    align-items: center;
+}
+
+.admin header .web-container .logo {
+    margin-right: 50px;
+}
+
+.admin header .web-container a + a {
+    margin-left: 30px;
+}
+
+.admin header .web-container .links a {
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 18px;
+}
+
+.admin .page-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    align-items: center;
+}
+
+.admin header .web-container .links a.active {
+    color: #999;
+}
+
+/*=== INDEX ===*/
+
+/* RECIPE */
+.admin h2 {
+    /* margin-bottom: 30px; */
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: bold;
+    color: var(--color-main);
+}
+
+.admin .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 20px;
+}
+
+.admin .card{
+    display: flex;
+}
+
+.admin .card .card_image {
+    width: 172px;
+    height: 80px;
+    margin-right: 20px;    
+}
+
+.admin .card .card_image img{
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+.card_title p {
+    color: var(--color-main);
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.card_chef p {
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.card_content a, .chef a {
+    color: #6558c3;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* CHEF */
+.chefs {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr ;
+}
+
+.chefs .chef {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 20px;
+    align-items: center;
+    
+    margin-bottom: 30px;
+}
+.chef .chef_avatar img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 0;
+}
+
+.chef_content p {
+    margin-bottom: 10px;
+}
+
+.chef_content a {
+    margin-bottom: 0;
+}
+
+.chef-recipes h2 {
+    margin-bottom: 30px;
+}
+
+/*=== SHOW ===*/
+
+/* RECIPE */
+#recipe .page-header { 
+    margin-bottom: 24px;
+}
+
+#recipe .recipe-image img {
+    width: 100%;
+    height: 280px;
+    border-radius: 15px;
+}
+
+#recipe .recipe-header {
+    text-align: center;
+}
+
+#recipe .recipe-title h1 {
+    font-size: 36px;
+    line-height: 42px;
+    margin-top: 50px;
+    font-weight: bold;
+}
+
+#recipe .recipe-chef p {
+    margin-top: 5px;
+    color: #777;
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: normal;
+    margin-bottom: 30px;
+}
+
+#recipe .topic {
+    display: flex;
+}
+
+#recipe .recipe-ingredients,
+#recipe .recipe-preparation,
+#recipe .recipe-information {
+    margin-bottom: 40px;
+}
+
+#recipe .topic {
+    display: flex;
+}
+
+#recipe .recipe-ingredients h2,
+#recipe .recipe-preparation h2,
+#recipe .recipe-information h2 {
+    margin-bottom: 20px;
+}
+
+#recipe .recipe-ingredients ul,
+#recipe .recipe-preparation ul,
+#recipe .recipe-information ul {
+    font-size: 18px;
+    line-height: 28px;
+    color: #444;
+}
+
+#recipe .recipe-information p {
+    font-size: 18px;
+    line-height: 28px;
+    color: #444;
+}
+
+/* CHEF */
+#chef .page-header {
+    align-items: center;
+    align-content: center;
+    
+    margin-bottom: 24px;
+}
+
+#chef .page-header h2 {
+    margin: 0;
+}
+
+#chef .page-header a {
+    background-color: #6558c3;
+    color: #fff;
+    text-decoration: none;
+
+    padding: 10px 20px;
+    border-radius: 4px;
+}
+
+#chef .chef-header {
+    text-align: center;
+}
+
+#chef .chef-avatar_url img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 30px;
+}
+
+#chef .chef-name h1 {
+    font-size: 36px;
+    font-weight: bold;
+    line-height: 42px;
+    color: var(--color-main);
+    margin-bottom: 4px;
+}
+
+#chef .chef-total_recipes p{
+    font-style: 20px;
+    line-height: 24px;
+    color: #777;
+}
+
+/* === FORM === */
+/*=== EDIT ===*/
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+
+    margin-bottom: 30px;
+}
+
+.form-header h2 {
+    margin-bottom: 0;
+}
+
+.form-header-btn {
+    display: flex;
+}
+
+.form-header-btn form {
+    margin-right: 10px;
+}
+
+.form-header-btn form button {
+    background: #DC4747;
+}
+
+button, .btn {
+    background: #6558C3;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 9px 20px;
+    border-radius: 4px;
+
+    cursor: pointer;
+}
+
+.item button { /* pegando o button do fields */
+    background: none;
+    color: #6558C3;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: bold;
+    
+    margin-top: 15px;
+    padding: 0;
+}
+
+input, textarea, select {
+    font-size: 16px;
+    color: var(--color-main);
+
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px 20px;
+    font-weight: 500;
+}
+
+select:invalid { 
+    color:gray;
+}
+
+textarea {
+    font-family: 'Roboto', sans-serif;
+
+    height: 257px;
+    margin-bottom: 30px;
+}
+
+.item > div:first-child {
+    margin-bottom: 10px;
+    margin-top: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--color-main);
+}
+
+#ingredients, #preparation {
+    margin-top: 0;
+}
+
+#ingredients .ingredient, #preparation .preparation {
+    margin-bottom: 10px;
+}  
+
+.item div:last-child {  /* para tirar o margin-bottom do último input */
+    margin-bottom: 0 !important;
+}
+
+/*  IMAGES-UPLOAD */
+form .item .images-container {
+    display: flex;
+}
+
+form .item #images-upload {
+    position: relative;
+    display: block;
+    overflow: hidden;
+
+    width: 150px;
+    height: 150px;
+    margin-right: 10px;
+
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+form .item #images-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+    overflow: hidden;  /* é para que não haja rolagem */
+    opacity: 0;  
+
+    cursor: pointer;
+
+}
+
+form .item #images-upload i {
+    padding: 0;
+    
+    top: 0;
+    left: 0;
+
+    font-size: 300%;
+    /* font-style: 28px; */
+    color: #777;
+    text-align: center;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+    
+}
+
+form .item #images-preview {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    margin: 0;
+}
+
+form .item #images-preview img {
+    width: 150px;
+    height: 150px;
+    
+    border: 1px solid #DDDDDD;
+    border-radius: 3.5px;
+
+    object-fit: cover;
+
+}
+
+form .item #images-preview .image {
+    position: relative;
+}
+
+form .item #images-preview i {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    background: rgba(255, 255, 255, 0.8);
+    color: red;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 40px;
+    line-height: 40px;
+    cursor: pointer;
+
+    transition: opacity 200ms;
+
+    opacity: 0;
+}
+
+form .item #images-preview .image:hover i {
+    opacity: 1;
+}

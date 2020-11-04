@@ -1,0 +1,61 @@
+{% set pageName = "recipes" %}
+{% extends "admin/layout.njk" %}
+
+
+{% block content %} 
+
+<section id="recipe">
+                   
+    <div class="container" id="{{recipe.id}}">
+        <div class="page-header">
+            <h2>Receita: {{recipe.title}}</h2>
+            <a href="/admin/recipes/{{recipe.id}}/edit" class="btn">Editar Receita</a>
+        </div>
+        
+        <div class="recipe-image">
+            <img src="{{recipe.image}}" alt="Imagem de {{recipe.title}}">
+        </div>
+
+        <div class="recipe-header">
+            <div class="recipe-title">
+                <h1>{{recipe.title}}</h1>
+            </div>
+            <div class="recipe-chef">
+                <p>por {{recipe.chef_name}}</p>
+            </div>
+        </div>
+
+        <div class="recipe-ingredients">
+            <div class= "topic">
+                <h2>Ingredientes</h2>
+            </div>
+            <ul class="instructions">
+            {% for ingredient in recipe.ingredients %}
+            <li>{{ingredient}}</li>
+            {% endfor %}
+            </ul>          
+        </div>
+
+        <div class="recipe-preparation">
+            <div class="topic">
+                <h2>Modo de preparo</h2>
+            </div>
+            <ul class="instructions">
+            {% for preparation in recipe.preparation %}
+            <li>{{preparation}}</li>
+            {% endfor %}
+            </ul>
+        </div>
+
+        <div class="recipe-information">
+            <div class="topic">
+                <h2>Informações adicionais</h2>
+            </div>
+            <p class="instructions">{{recipe.information}}</p>
+        </div>
+    </div>
+
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        {% block head %}
+
+        <title>Foodfy</title>
+        
+        {% endblock %}
+        <link rel="stylesheet" href="/styles/admin.css"> 
+        <link rel="shortcut icon" href="/img/admin-img/favicon.ico" type="image/x-icon">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    </head>
+    
+
+    <body>
+        <div class="admin">
+
+            <header>    
+                <div class="web-container"> 
+                
+                    <div class="logo">
+                        <a href="/admin/recipes">
+                            <img src="/img/admin-img/logo-white.png" alt="logo-white">
+                        </a>
+                    </div>
+                    
+                    <div class="links">
+                        <a href="/admin/recipes" {% if pageName == 'recipes' %} class= "active" {% endif %}>Receitas</a>
+                        <a href="/admin/chefs" {% if pageName == 'chefs' %} class= "active" {% endif %}>Chefs</a>
+                    </div>
+            
+                </div>
+            </header>
+
+            {% block content %} {% endblock %}
+
+
+        </div>
+
+      
+    </body>
+
+
+</html>

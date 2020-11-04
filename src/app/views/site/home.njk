@@ -1,0 +1,93 @@
+{% extends "site/layout.njk" %}
+
+{% block head %}
+    
+    <title>Foodfy</title>
+
+{% endblock %}
+
+{% block headerContent %} 
+<div class="form-filter">
+    <form action="/searchResult" method="get">
+        <input 
+            type="text" 
+            name="filter" 
+            placeholder="Buscar uma receita"
+            value="{{ filter }}"
+            required
+        >
+        <button type="submit">Filtrar</button>
+    </form>          
+</div>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="banner">
+        
+        <div class="text_banner">
+            <h2>
+                As melhores receitas
+            </h2>
+            <p>
+                Aprenda a construir os melhores pratos com receitas criadas por profissionais do mundo inteiro.
+            </p>
+        </div>
+        <img src="img/admin-img/chef.png" alt="chef">
+
+    </div>
+
+    <div class="bottom">
+    
+        <h2>Mais acessadas</h2>
+        <section class="cards">
+            
+            {% for recipe in recipes %}
+            <div class="card" id= "{{recipe.id}}">
+                
+                <div class="card_image">
+                    <img src="{{recipe.image}}" alt="Imagem de {{recipe.title}}">
+                </div>
+                <div class="card_title">
+                    <p>{{recipe.title}}</p>
+                </div>
+                <div class="card_chef">
+                    <p>por {{recipe.chef_name}}</p>
+                </div>
+                
+            </div>
+            {% endfor %}
+            
+        </section>
+    </div>
+
+    <div class="modal-overlay">                
+                
+        <div class="modal">
+                            
+            <div class="modal-content">
+                <div class="card_image">
+                    <img src="{{recipe.image}}" alt="Imagem de {{recipe.title}}">
+                </div>
+                <div class="card_title">
+                    <p></p>
+                </div>
+                <div class="card_chef">
+                    <p></p>
+                </div>
+            </div>
+
+            <a class="close-modal">
+                <p>Fechar modal</p>
+            </a>   
+        </div>
+
+    </div>
+</div> 
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/scripts.js"></script>
+{% endblock %}

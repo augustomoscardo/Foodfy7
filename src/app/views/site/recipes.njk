@@ -1,0 +1,50 @@
+{% set pageName = "recipes" %}
+{% extends "site/layout.njk" %}
+
+{% block head %}
+    
+    <title>Receitas - Foodfy</title>
+
+{% endblock %}
+
+{% block headerContent %} 
+<div class="form-filter">
+    <form action="/searchResult" method="get">
+        <input 
+            type="text" 
+            name="filter" 
+            placeholder="Buscar uma receita"
+            value="{{ filter }}"
+            required
+        >
+        <button type="submit">Filtrar</button>
+    </form>          
+</div>
+{% endblock %}
+    
+{% block content %}
+          
+    <section class="cards">
+
+        {% for recipe in recipes %}    
+        <div class="card" id="{{recipe.id}}">
+            
+            <div class="card_image">
+                <img src="{{recipe.image}}" alt="Imagem de {{recipe.title}}">
+            </div>
+            <div class="card_title">
+                <p>{{recipe.title}}</p>
+            </div>
+            <div class="card_chef">
+                <p>por {{recipe.chef_name}}</p>
+            </div>
+            
+        </div>
+        {% endfor %}
+
+    </section>
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/recipePage.js"></script>
+{% endblock %}

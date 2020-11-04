@@ -1,0 +1,30 @@
+{% set pageName = "recipes" %}
+{% extends "admin/layout.njk" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header"> 
+        <h2>Gerenciar Receitas</h2>
+        <a href="/admin/recipes/create" class="btn">Adicionar Receita</a>
+    </div>
+
+    <div class="cards">
+        {% for recipe in recipes %}    
+            <div class="card" id="{{recipe.id}}">
+                <div class="card_image">
+                    <img src="{{recipe.image}}" alt="Imagem de {{recipe.title}}">
+                </div>
+                <div class="card_content">
+                    <div class="card_title">
+                        <p>{{recipe.title}}</p>
+                    </div>
+                    <div class="card_chef">
+                        <p>por {{recipe.chef_name}}</p>
+                    </div>
+                    <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

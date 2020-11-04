@@ -1,0 +1,27 @@
+{% set pageName = "chefs" %}
+{% extends "admin/layout.njk" %}
+
+{% block head %}
+    
+    <title>Foodfy - Criando Chef</title>
+
+{% endblock %}
+
+{% block content %}
+
+    <section class="details">
+        <div class="container">
+            <div class="form-header">
+                <h2>Criando Chef</h2>
+                
+                <button type="submit" form="post">Salvar Chef</button>
+            </div>
+
+            <form id="post" action="/admin/chefs" method="post" enctype = "multipart/form-data">
+                    {% include 'admin/chefs/fields.njk' %}
+            </form>
+        </div>
+    </section>
+
+
+{% endblock content %}

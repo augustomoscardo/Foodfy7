@@ -1,0 +1,80 @@
+{% set pageName = "recipes" %}
+{% extends "site/layout.njk" %}
+
+{% block head %}
+
+        <title>Foodfy</title>
+        
+{% endblock %}
+
+{% block headerContent %} 
+<div class="form-filter">
+    <form action="/searchResult" method="get">
+        <input 
+            type="text" 
+            name="filter" 
+            placeholder="Buscar uma receita"
+            value="{{ filter }}"
+            required
+        >
+        <button type="submit">Filtrar</button>
+    </form>          
+</div>
+{% endblock %}
+
+{% block content %} 
+
+<section class="recipes">
+                   
+    <div class="content" id="{{recipe.id}}">
+        <div class="recipe-image">
+            <img src="{{recipe.image}}" alt="Imagem de {{recipe.title}}">
+        </div>
+        <div class="recipe-header">
+            <div class="recipe-title">
+                <h1>{{recipe.title}}</h1>
+            </div>
+            <div class="recipe-chef">
+                <p>por {{recipe.chef_name}}</p>
+            </div>
+        </div>
+        <div class="ingredients">
+            <div class= "topic">
+                <h2>Ingredientes</h2>
+                <h4 data-alvo="ingredients">ESCONDER</h4>
+            </div>
+            <ul class="instructions">
+                {% for ingredient in recipe.ingredients %}
+                <li>{{ingredient}}</li>
+                {% endfor %}
+            </ul>          
+        </div>
+
+        <div class="preparation">
+            <div class="topic">
+                <h2>Modo de preparo</h2>
+                <h4 data-alvo="preparation">ESCONDER</h4>
+            </div>
+            <ul class="instructions">
+            {% for preparation in recipe.preparation %}
+            <li>{{preparation}}</li>
+            {% endfor %}
+            </ul>
+        </div>
+
+        <div class="information">
+            <div class="topic">
+                <h2>Informações adicionais</h2>
+                <h4 data-alvo="information">ESCONDER</h4>
+            </div>
+            <p class="instructions">{{recipe.information}}</p>
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/showHideButton.js"></script>
+{% endblock %}
