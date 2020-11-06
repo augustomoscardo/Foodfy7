@@ -22,7 +22,7 @@ module.exports = {
     },
     async post(req, res) {
 
-        // console.log(req.files, req.body);
+        // console.log(req.files, req.body)
         
         try {
             const keys = Object.keys(req.body)
