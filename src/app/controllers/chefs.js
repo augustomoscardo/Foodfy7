@@ -36,16 +36,14 @@ module.exports = {
             if (req.files.length == 0) 
                 return res.send('Please send at least one image')
 
-            const filesPromise = req.files.map(file => File.create({ ...file }))
-
-            let results = await Promise.all(filesPromise)
-
-
-            results = await Chef.create(req.body)
+            let results = await Chef.create(req.body)
 
             const chefId = results.rows[0].id
 
-            
+            const filesPromise = req.files.map(file => File.create({ ...file, chef_id: chefId }))
+
+            await Promise.all(filesPromise)
+
             return res.redirect(`/admin/chefs/${chefId}`)
 
         } catch (error) {
