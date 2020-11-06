@@ -31,9 +31,10 @@
 
 <div class="item">
     <div>Nome da Receita</div>
-    <input type="text"
-    name="title"  
-    value="{{ recipe.title }}"
+    <input 
+        type="text"
+        name="title"  
+        value="{{ recipe.title }}"
     >
 </div>
 
@@ -57,19 +58,21 @@
         {% if recipe.ingredients %}
             {% for ingredient in recipe.ingredients %}
                 <div class="ingredient">
-                    <input type="text"
-                    name="ingredients[]"  
-                    value="{{ ingredient }}"
-                    placeholder="Ingrediente"
+                    <input 
+                        type="text"
+                        name="ingredients[]"  
+                        value="{{ ingredient }}"
+                        placeholder="Ingrediente"
                     >
                 </div>
             {% endfor %}
         {% else %}
             <div class="ingredient">
-                    <input type="text"
-                    name="ingredients[]"  
-                    value=""
-                    placeholder="Ingrediente"
+                    <input 
+                        type="text"
+                        name="ingredients[]"  
+                        value=""
+                        placeholder="Ingrediente"
                     >
                 </div>
         {% endif %}
@@ -84,19 +87,21 @@
         {% if recipe.preparation %}
             {% for preparation in recipe.preparation %}
                 <div class="preparation">
-                    <input type="text"
-                    name="preparation[]"  
-                    value="{{ preparation }}"
-                    placeholder= "Preparação"
+                    <input 
+                        type="text"
+                        name="preparation[]"  
+                        value="{{ preparation }}"
+                        placeholder= "Preparação"
                     >
                 </div>
             {% endfor %}
         {% else %}
                <div class="preparation">
-                    <input type="text"
-                    name="preparation[]"  
-                    value=""
-                    placeholder= "Preparação"
+                    <input 
+                        type="text"
+                        name="preparation[]"  
+                        value=""
+                        placeholder= "Preparação"
                     >
                 </div>        
         {% endif %}
@@ -110,3 +115,4 @@
 </div>
 
 <script src="/js/addFieldButton.js"></script>
+<script src="/js/imagesUpload.js"></script>

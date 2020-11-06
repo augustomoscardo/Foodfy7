@@ -42,17 +42,13 @@ module.exports = {
             WHERE recipes.id = $1`, [id])
     },
     findBy(filter) {
-        db.query(`
+        return db.query(`
             SELECT recipes.*, chefs.name AS chef_name
             FROM recipes
             LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
             WHERE recipes.title ILIKE '%${filter}%'
             OR chefs.name ILIKE '%${filter}%'
-            GROUP BY recipes.id, chefs.name`, function(err, results) {
-                if (err) throw `Database Error! ${err}`
-
-                callback(results.rows)
-            })
+            GROUP BY recipes.id, chefs.name`)
     },
     update(data) {
         const query = `

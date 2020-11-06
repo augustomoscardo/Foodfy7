@@ -1,5 +1,3 @@
-const { date } = require('../../lib/utils')
-
 const Chef = require('../models/Chef')
 const File = require('../models/File')
 
@@ -23,6 +21,8 @@ module.exports = {
         return res.render('admin/chefs/create')
     },
     async post(req, res) {
+
+        // console.log(req.files, req.body);
         
         try {
             const keys = Object.keys(req.body)
@@ -32,16 +32,21 @@ module.exports = {
                     return res.send('Please fill all fields!')
                 }
             }
+            
+            if (req.files.length == 0) 
+                return res.send('Please send at least one image')
 
-        let results = await Chef.create(req.body)
+            const filesPromise = req.files.map(file => File.create({ ...file }))
 
-        const chefId = results.rows[0].id
+            let results = await Promise.all(filesPromise)
 
-        // const filesPromise = req.files.map(file => File.create({ ...file, chef_id: chefId}))
 
-        // await Promise.all(filesPromise)
+            results = await Chef.create(req.body)
 
-        return res.redirect(`/admin/chefs/${chefId}`)
+            const chefId = results.rows[0].id
+
+            
+            return res.redirect(`/admin/chefs/${chefId}`)
 
         } catch (error) {
             console.log(error)
@@ -115,10 +120,9 @@ module.exports = {
 
                 return res.redirect(`/admin/chefs`)
             }
-            
+
         } catch (error) {
-            console.log(error)
-            
+            console.log(error)   
         }
     },
 }

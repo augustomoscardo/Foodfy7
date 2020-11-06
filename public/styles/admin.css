@@ -334,6 +334,7 @@ textarea {
 }
 
 /*  IMAGES-UPLOAD */
+
 form .item .images-container {
     display: flex;
 }
@@ -374,7 +375,6 @@ form .item #images-upload i {
     left: 0;
 
     font-size: 300%;
-    /* font-style: 28px; */
     color: #777;
     text-align: center;
 
@@ -384,7 +384,6 @@ form .item #images-upload i {
 
     width: 100%;
     height: 100%;
-    
 }
 
 form .item #images-preview {
@@ -425,7 +424,6 @@ form .item #images-preview i {
     justify-content: center;
 
     font-size: 40px;
-    line-height: 40px;
     cursor: pointer;
 
     transition: opacity 200ms;
@@ -434,5 +432,101 @@ form .item #images-preview i {
 }
 
 form .item #images-preview .image:hover i {
+    opacity: 1;
+}
+
+/*  AVATAR-UPLOAD */
+
+form .item .avatar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* para o material-icon ficar encima da img */
+}
+
+form .item #avatar-upload {
+    position: relative;
+
+    width: 140px;
+    height: 40px;
+
+    display: block;
+
+    margin-top: 24px;  
+}
+
+form .item #avatar-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* right: 0;
+    bottom: 0; */
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+    overflow: hidden;  /* é para que não haja rolagem */
+    opacity: 0;
+
+    cursor: pointer;
+
+}
+
+form .item #avatar-upload p {
+    background-color:  #6558C3;
+    color: #fff;
+
+    width: 100%;
+    height: 100%;
+
+    font-size: 16px;
+    font-weight: bold;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 4px;
+
+}
+
+form .item #avatar-preview img {
+    width: 128px;
+    height: 128px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+}
+
+form .item #avatar-preview .avatar-image {
+    position: relative;
+}
+
+form .item #avatar-preview i {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    background: rgba(255, 255, 255, 0.8);
+    color: red;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 40px;
+    cursor: pointer;
+
+    transition: opacity 200ms;
+
+    opacity: 0;
+}
+
+form .item #avatar-preview .avatar-image:hover i {
     opacity: 1;
 }

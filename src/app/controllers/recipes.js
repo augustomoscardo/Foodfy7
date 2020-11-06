@@ -34,7 +34,6 @@ module.exports = {
 
         try {
             const keys = Object.keys(req.body)
-            console.log("para aqui")
 
             for (key of keys) {
                 if (req.body[key] == "") {
@@ -44,7 +43,6 @@ module.exports = {
 
             if (req.files.length == 0) 
                 return res.send('Please send at least one image')
-
 
             let results = await Recipe.create(req.body)
             

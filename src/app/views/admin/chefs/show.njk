@@ -21,13 +21,23 @@
 
         <div class="chef-header">
             <div class="chef-avatar_url">
-                <img src="{{chef.avatar_url}}" alt="Imagem de {{chef.name}}">
+                {% if not files[0] %}
+                    <p>Chef não possui Avatar</p>
+                {% else %}
+                    <img src="{{files[0].src}}" alt="Imagem de {{chef.name}}">
+                {% endif %}
             </div>
             <div class="chef-name">
                 <h1>{{chef.name}}</h1>
             </div>
             <div class="chef-total_recipes">
-                <p>{{chef.total_recipes}} receitas</p>
+                {% if chef.total_recipes == 0 %}
+                    <p>Não há receitas</p>
+                {% elseif chef.total_recipes == 1 %}
+                    <p>{{chef.total_recipes}} receita</p>
+                {% else %}
+                    <p>{{chef.total_recipes}} receitas</p>
+                {% endif %}
             </div>
         </div>
 

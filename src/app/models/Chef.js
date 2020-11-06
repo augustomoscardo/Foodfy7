@@ -70,6 +70,6 @@ module.exports = {
             GROUP BY chefs.id`)
     },
     files(id) {
-        return db.query(`SELECT * FROM files WHERE id = $1`, [id])
+        return db.query(`SELECT * FROM files WHERE files.id = $1`, [id])
     }
 }
