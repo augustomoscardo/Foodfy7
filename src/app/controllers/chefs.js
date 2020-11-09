@@ -22,7 +22,7 @@ module.exports = {
     },
     async post(req, res) {
 
-        // console.log(req.files, req.body)
+        console.log(req.files, req.body)
         
         try {
             const keys = Object.keys(req.body)
@@ -43,7 +43,7 @@ module.exports = {
             const filesPromise = req.files.map(file => File.create({ ...file, chef_id: chefId }))
 
             await Promise.all(filesPromise)
-
+            
             return res.redirect(`/admin/chefs/${chefId}`)
 
         } catch (error) {
@@ -59,9 +59,15 @@ module.exports = {
 
             if (!chef) return res.send('Chef not found!')
 
-            await Chef.findRecipesOfChef(req.params.id)
+            await Chef.findRecipesOfChef(req.params.id) // ou (chefs.id)
 
-            return res.render("admin/chefs/show", { chef, recipes })
+            results = await Chef.files(chef.id)
+            const chefFiles = results.rows.map(file => ({
+                ...file,
+                src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
+            }))
+
+            return res.render("admin/chefs/show", { chef, recipes, chefFiles })
 
         } catch (error) {
             console.log(error)
@@ -76,7 +82,14 @@ module.exports = {
 
             if (!chef) return res.send('Chef not found!')
 
-            return res.render("admin/chefs/edit", { chef })
+            // get images
+            results = await Chef.files(chef.id)
+            const chefFiles = results.rows.map(file => ({
+                ...file,
+                src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
+            }))
+
+            return res.render("admin/chefs/edit", { chef, chefFiles })
 
         } catch (error) {
             console.log(error)
@@ -92,6 +105,25 @@ module.exports = {
                 if (req.body[key] == "") {
                     return res.send('Please fill all fields!')
                 }
+            }
+
+            if (req.files.length != 0) {
+                const newFilesPromise = req.files.map(file => 
+                    File.create({...file, path}))
+
+                await Promise.all(newFilesPromise)
+            }
+
+            if (req.body.removed_files) {
+                const removedFiles = req.body.removed_files.split(",")
+
+                const lastIndex = removedFiles.length - 1
+
+                removedFiles.splice(lastIndex, 1)
+
+                const removedFilesPromise = removedFiles.map(id => File.delete(id))
+
+                await Promise.all(removedFilesPromise)
             }
 
             await Chef.update(req.body)
