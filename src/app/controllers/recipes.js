@@ -49,23 +49,28 @@ module.exports = {
             let results = await Recipe.create(req.body)
             
             const recipeId = results.rows[0].id
-
+console.log(results.rows[0]);
             //create images
             const filesPromise = req.files.map(file => File.create(file))
-
+            
             results = await Promise.all(filesPromise)
-
+// console.log(results.rows[0]);
             const fileId = results[0].rows[0].id
             
             // unite recipe and files
-            const recipeFilesPromise = req.files.map(file => RecipeFile.create({
-                ...file,
-                recipe_id: recipeId,
-                file_id: fileId
-            }))
+            const recipeFiles = await Promise.all(results.map(result => {
+                console.log(`Cadastrando RecipeFile de ${JSON.stringify(result)}`)
+                return RecipeFile.create(result.file_id, result.recipe_id)
+              }))
+            // RecipeFile.create(result.recipe_id, result.file_id)
+            // const recipeFilesPromise = req.files.map(file => RecipeFile.create({
+            //     ...file,
+            //     recipe_id: recipeId,
+            //     file_id: fileId
+            // }))
 
-            results = await Promise.all(recipeFilesPromise)
-
+            console.log(recipeFiles);
+            // results = await Promise.all(recipeFiles)
             return res.redirect(`/admin/recipes/${recipeId}`)
 
         } catch (error) {
