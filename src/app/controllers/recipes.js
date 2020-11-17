@@ -1,5 +1,6 @@
 const Recipe = require('../models/Recipe')
 const File = require('../models/File')
+const RecipeFile = require('../models/RecipeFile')
 
 module.exports = {
     async index(req, res) {
@@ -21,9 +22,9 @@ module.exports = {
         try {
             let results = await Recipe.chefsSelectOptions()
 
-            const options = results.rows[0]
+            const chefOptions = results.rows
             
-            return res.render('admin/recipes/create', { chefOptions: options })
+            return res.render('admin/recipes/create', { chefOptions })
 
         } catch (error) {
             console.log(error)
@@ -44,14 +45,27 @@ module.exports = {
             if (req.files.length == 0) 
                 return res.send('Please send at least one image')
 
+            // create recipe
             let results = await Recipe.create(req.body)
             
             const recipeId = results.rows[0].id
 
-            const filesPromise = req.files.map(file => File.create({ ...file, recipe_id: recipeId}))
+            //create images
+            const filesPromise = req.files.map(file => File.create(file))
 
-            await Promise.all(filesPromise)
+            results = await Promise.all(filesPromise)
+
+            const fileId = results[0].rows[0].id
             
+            // unite recipe and files
+            const recipeFilesPromise = req.files.map(file => RecipeFile.create({
+                ...file,
+                recipe_id: recipeId,
+                file_id: fileId
+            }))
+
+            results = await Promise.all(recipeFilesPromise)
+
             return res.redirect(`/admin/recipes/${recipeId}`)
 
         } catch (error) {
@@ -66,9 +80,9 @@ module.exports = {
             const recipe = results.rows[0]
 
             if (!recipe) return res.send('Recipe not found!')
-
+          
+            // get images
             results = await Recipe.files(recipe.id)
-
 
             const files = results.rows.map(file => ({
                 ...file,
@@ -126,7 +140,7 @@ module.exports = {
             const keys = Object.keys(req.body)
 
             for (key of keys) {
-                if (req.body[key] == "") {
+                if (req.body[key] == "" && key != "removed_files") {
                     return res.send('Please fill all fields!')
                 }
             }
