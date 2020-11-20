@@ -7,10 +7,23 @@ module.exports = {
 
         try {
             let results = await Recipe.all()
-
             const recipes = results.rows
 
-            return res.render('admin/recipes/index', { recipes })
+            const recipeWithImage = await Promise.all(recipes.map( async recipe => {
+                const fileResults = await RecipeFile.findRecipeId(recipe.id)   
+                const fileId = fileResults.rows[0].file_id
+                console.log(fileId);
+
+                const imageResults = await File.find(fileId)
+                const image = imageResults.rows[0].path
+
+                return {
+                    ...recipe,
+                    image: `${req.protocol}://${req.headers.host}${image.replace("public", "")}`
+                }
+            }))
+            
+            return res.render('admin/recipes/index', { recipes: recipeWithImage })
             
         } catch (error) {
             console.log(error)
@@ -20,6 +33,7 @@ module.exports = {
     async create(req, res) {
     
         try {
+            // get chefs
             let results = await Recipe.chefsSelectOptions()
 
             const chefOptions = results.rows
@@ -46,33 +60,17 @@ module.exports = {
                 return res.send('Please send at least one image')
 
             // create recipe
-            let results = await Recipe.create(req.body)
-            
-            const recipeId = results.rows[0].id
-console.log(results.rows[0]);
-            //create images
-            const filesPromise = req.files.map(file => File.create(file))
-            
-            results = await Promise.all(filesPromise)
-// console.log(results.rows[0]);
-            const fileId = results[0].rows[0].id
-            
+            const recipeResults = await Recipe.create(req.body)
+            const recipe = recipeResults.rows[0]
+
+            // create files
+            const filesResults = await Promise.all(req.files.map(file => File.create(file)))  //mapeando cada arquivo para operar o File.create
+            const files = filesResults.map(result => result.rows[0]) //para cada results do File.create, mapear cada um acessando o rows[0] (que é o id do File que criei)
+
             // unite recipe and files
-            const recipeFiles = await Promise.all(results.map(result => {
-                console.log(`Cadastrando RecipeFile de ${JSON.stringify(result)}`)
-                return RecipeFile.create(result.file_id, result.recipe_id)
-              }))
-            // RecipeFile.create(result.recipe_id, result.file_id)
-            // const recipeFilesPromise = req.files.map(file => RecipeFile.create({
-            //     ...file,
-            //     recipe_id: recipeId,
-            //     file_id: fileId
-            // }))
+            files.map(file => RecipeFile.create({ recipe_id: recipe.id, file_id: file.id  })) // 
 
-            console.log(recipeFiles);
-            // results = await Promise.all(recipeFiles)
-            return res.redirect(`/admin/recipes/${recipeId}`)
-
+            return res.redirect(`/admin/recipes/${recipe.id}`)
         } catch (error) {
             console.log(error)
         }
@@ -80,21 +78,29 @@ console.log(results.rows[0]);
     async show(req, res) {
 
         try {
-            let results = await Recipe.find(req.params.id)
+            const recipeResults = await Recipe.find(req.params.id)
 
-            const recipe = results.rows[0]
+            const recipe = recipeResults.rows[0]
 
             if (!recipe) return res.send('Recipe not found!')
           
             // get images
-            results = await Recipe.files(recipe.id)
+            const results = await RecipeFile.findRecipeId(req.params.id)
+            const recipeFilesPromise = await Promise.all(results.rows.map(file => File.find(file.file_id)))
+            // console.log(JSON.stringify(recipeFilesPromise));
 
-            const files = results.rows.map(file => ({
+            let recipeFiles = recipeFilesPromise.map(result => result.rows[0])
+            recipeFiles = recipeFiles.map(file => ({
                 ...file,
-                src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}` 
+                src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
             }))
-            
-            return res.render('admin/recipes/show', { recipe, files })
+            // console.log(recipeFiles);
+            // const files = results.rows.map(file => ({
+            //     ...file,
+            //     src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
+            // }))
+
+            return res.render('admin/recipes/show', { recipe, recipeFiles })
 
         } catch (error) {
             console.log(error)
@@ -110,14 +116,14 @@ console.log(results.rows[0]);
 
             if (!recipe) return res.send('Recipe not found!')
 
+            // get chefs
             results = await Recipe.chefsSelectOptions() 
 
             const chefOptions = results.rows
 
-            results = await Recipe.files(recipe.id)
-
+            // get images
+            results = await RecipeFile.files(req.params.id)
             let files = results.rows
-
             files = files.map(file => ({
                 ...file,
                 src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
@@ -128,16 +134,6 @@ console.log(results.rows[0]);
         } catch (error) {
             console.log(error)
         }
-
-        // Recipe.find(req.params.id, function(recipe) {
-        //     if (!recipe) return res.send('Recipe not found!')
-
-
-        //     Recipe.chefsSelectOptions(function(options) {
-
-        //         return res.render('admin/recipes/edit', { recipe, chefOptions: options })
-        //     })
-        // })
     },
     async put(req, res) {
 
@@ -150,11 +146,15 @@ console.log(results.rows[0]);
                 }
             }
 
-            if (req.files.length != 0) {
-                const newFilesPromise = req.files.map(file => 
-                    File.create({...file, recipe_id: req.body.id}))
+            let newFiles;
 
-                await Promise.all(newFilesPromise)
+            if (req.files.length != 0) {
+                newFiles = await Promise.all(req.files.map(file => File.create(file)))
+                // console.log(newFiles);
+            
+                const files = newFiles.map(result => result.rows[0])
+                files.map(file => RecipeFile.create({recipe_id: req.body.id, file_id: file.id}))
+                // console.log(files);
             }
 
             if (req.body.removed_files) {

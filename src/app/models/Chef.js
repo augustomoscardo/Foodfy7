@@ -38,9 +38,16 @@ module.exports = {
     findRecipesOfChef(id) {
         return db.query(`
         SELECT *
-        FROM RECIPES
+        FROM recipes
         LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
         WHERE chefs.id = $1`, [id])
+    },
+    findChefRecipes(id) {
+        return db.query(`
+            SELECT *
+            FROM recipes
+            WHERE chef_id = $1
+        `, [id])
     },
     update(data) {
 
@@ -62,8 +69,11 @@ module.exports = {
         return db.query(query, values)
     },
     delete(id) {
-        return db.query(`DELETE FROM chefs
-            WHERE id = $1`, [id])
+        try {
+            return db.query(`DELETE FROM chefs WHERE id = $1`, [id])
+        } catch (error) {
+            console.log(error);
+        }
     },
     totalRecipesOfChef() {
         return db.query(`
@@ -72,7 +82,7 @@ module.exports = {
             LEFT JOIN recipes ON (chefs.id = recipes.chef_id)
             GROUP BY chefs.id`)
     },
-    files(id) {
+    files(id) { // é o mesmo que o File.find()
         return db.query(`SELECT * FROM files WHERE id = $1`, [id])
     }
 }

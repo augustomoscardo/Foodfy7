@@ -18,6 +18,10 @@ module.exports = {
 
         return db.query(query, values)
     },
+    find(id) {
+        return db.query(`
+            SELECT * FROM files WHERE id = $1`, [id])
+    },
     async delete(id) {
         try {
             const result = await db.query(`SELECT * FROM files WHERE id = $1`, [id])
